@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var statusText: TextView
     private lateinit var grantButton: Button
     private lateinit var toggleButton: Button
@@ -95,7 +94,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
-        // 服务可能被长按退出，状态以实际实例为准
         OverlayState.running = OverlayService.instance != null
         val canOverlay = Settings.canDrawOverlays(this)
         statusText.text = if (canOverlay) {

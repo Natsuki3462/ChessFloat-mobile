@@ -30,13 +30,8 @@ data class GameState(
     val myWhite: Boolean = true
 )
 
-/**
- * 自绘棋盘。坐标与桌面版一致：a1 = 0 ... h8 = 63。
- * 触摸改为「点起点 -> 点终点」，再点同一点取消（手机上没有 hover / 右键）。
- */
 @SuppressLint("ViewConstructor")
 class BoardView(context: Context) : View(context) {
-
     var state: GameState = GameState()
         set(value) { field = value; invalidate() }
 

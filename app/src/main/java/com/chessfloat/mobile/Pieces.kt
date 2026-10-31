@@ -7,12 +7,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
 
-/**
- * 棋子矢量路径，坐标系 0..100，由桌面版 app/pieces.py 的 QPainterPath 逐条移植。
- * 用 Path.op(UNION) 复刻 QPainterPath.united()。
- */
 object Pieces {
-
     const val PAWN = 1
     const val KNIGHT = 2
     const val BISHOP = 3

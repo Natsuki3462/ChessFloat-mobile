@@ -10,6 +10,10 @@
   悬浮球只显示一个胜率数字，点开是完整棋盘。全程离线，不截图、不联网、不上传任何数据。
 </p>
 
+<p align="center">
+  <b>桌面版（Windows / macOS / Linux）：<a href="https://github.com/Natsuki3462/chess">Natsuki3462/chess</a></b>
+</p>
+
 ---
 
 ## 这是什么
@@ -36,9 +40,9 @@
 
 ## 界面
 
-> 截图待补充：把手机截图放到 `docs/screenshot.png` 并取消下面这行注释。
->
-> `<!-- <img src="docs/screenshot.png" width="320"> -->`
+<p align="center">
+  <img src="docs/screenshot.jpg" width="340" alt="ChessFloat Mobile 截图">
+</p>
 
 面板结构（顶栏 + 棋盘 + 历史条 + 底栏）：
 
@@ -192,6 +196,10 @@ ChessFloat-Android/
 ## 许可与致谢
 
 本项目以 **GPLv3** 发布，完整文本见 [LICENSE](LICENSE)，第三方组件与来源说明见 [NOTICE](NOTICE)。
+
+> **关于商用**：GPLv3 允许商业使用，但任何分发（含商用）都必须以同样许可公开源代码并保留版权声明。
+> 之所以不能改用「禁止商用」类许可，是因为本项目 vendor 了 GPLv3 的 python-chess，
+> 在其之上附加额外限制会构成对该库的侵权。
 
 它派生自桌面版 ChessFloat：
 

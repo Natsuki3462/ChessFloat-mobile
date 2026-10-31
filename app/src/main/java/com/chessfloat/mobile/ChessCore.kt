@@ -10,13 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.concurrent.Executors
 
-/**
- * Python 内核的 Kotlin 封装。
- * 所有 Python 调用都在单线程池里串行执行（引擎分析是阻塞的），
- * 结果通过回调抛回主线程。
- */
 object ChessCore {
-
     const val EMA_ALPHA = 0.35f
     private const val AUTO_ACCEPT_DELAY_MS = 320L
 
@@ -165,7 +159,6 @@ object ChessCore {
         if (canSelect(square)) select(square) else clearSelection()
     }
 
-    /** 采纳当前建议着法（对应电脑版的「采纳」按钮）。 */
     fun acceptSuggestion(): Boolean {
         val s = suggestion ?: return false
         if (!state.isMyTurn || state.isOver) return false

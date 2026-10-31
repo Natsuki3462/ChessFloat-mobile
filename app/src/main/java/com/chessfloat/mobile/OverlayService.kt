@@ -26,7 +26,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 
 class OverlayService : Service() {
-
     companion object {
         private const val CHANNEL_ID = "chessfloat_overlay"
         private const val NOTIF_ID = 41
@@ -94,11 +93,9 @@ class OverlayService : Service() {
         val engine = applicationInfo.nativeLibraryDir + "/libstockfish.so"
         ChessCore.start(this, engine, cfg) { refreshStatus() }
 
-        // 启动即要求选边，不给默认值
         showSidePicker(cancellable = false)
     }
 
-    /** 选边。启动时不可取消（必须选一个），中途按 ⟳ 换边时可取消。 */
     private fun showSidePicker(cancellable: Boolean = true) {
         showPicker(
             listOf(
@@ -109,7 +106,6 @@ class OverlayService : Service() {
         )
     }
 
-    /** 长按气泡退出：直接停服务，棋局不保留。 */
     private fun exitApp() {
         Toast.makeText(this, "已退出，棋局未保留", Toast.LENGTH_SHORT).show()
         stopSelf()
@@ -221,7 +217,6 @@ class OverlayService : Service() {
             setPadding(dp(6), dp(4), dp(6), dp(4))
         }
 
-        // ── 顶栏：状态 · 胜率 · 评估 · A · ⚙
         val header = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
@@ -264,7 +259,6 @@ class OverlayService : Service() {
         header.addView(settings)
         container.addView(header)
 
-        // ── 棋盘
         val bv = BoardView(this).apply {
             state = ChessCore.state
             suggestion = ChessCore.suggestion
@@ -273,7 +267,6 @@ class OverlayService : Service() {
         }
         container.addView(bv, LinearLayout.LayoutParams(side - dp(12), side - dp(12)))
 
-        // ── 历史条
         val scroll = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false }
         val row = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -288,7 +281,6 @@ class OverlayService : Service() {
             LinearLayout.LayoutParams.MATCH_PARENT, dp(24)
         ))
 
-        // ── 底栏：采纳 + ↩ ↪ ⇅ ⟳
         val footer = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
@@ -305,7 +297,7 @@ class OverlayService : Service() {
             setOnClickListener { ChessCore.acceptSuggestion() }
         }
         acceptBtn = accept
-        // 左侧留白，把按钮组推到右边
+
         footer.addView(View(this), LinearLayout.LayoutParams(0, 1, 1f))
         footer.addView(accept)
         footer.addView(toolBtn("↩") { ChessCore.undo() })
@@ -316,7 +308,7 @@ class OverlayService : Service() {
         ))
 
         val params = WindowManager.LayoutParams(
-            // 高度 = 上下 padding(8) + 顶栏(26) + 历史(24) + 底栏(32) + 棋盘(side-12)
+
             side, side + dp(78),
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
@@ -332,7 +324,6 @@ class OverlayService : Service() {
         refreshHistory(ChessCore.state)
         refreshStatus()
 
-        // 气泡置于棋盘之上，保证随时可点收起
         wm.removeView(bubble)
         wm.addView(bubble, bubbleParams)
     }

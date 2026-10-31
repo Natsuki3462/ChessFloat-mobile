@@ -10,13 +10,8 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 
-/**
- * 收起态的悬浮气泡：56dp 圆，显示胜率环 + 数字。
- * 拖动移动窗口，松手吸附左右边缘；轻点展开/收起棋盘。
- */
 @SuppressLint("ViewConstructor")
 class BubbleView(context: Context) : View(context) {
-
     var winPct: Int? = null
         set(value) { field = value; invalidate() }
 
@@ -39,7 +34,6 @@ class BubbleView(context: Context) : View(context) {
 
     private val font = Typeface.create("sans-serif-black", Typeface.NORMAL)
 
-    /** 黑色描边层：先画它，再画填充，得到清晰的轮廓。 */
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textAlign = Paint.Align.CENTER
         typeface = font
@@ -62,7 +56,6 @@ class BubbleView(context: Context) : View(context) {
     }
 
     override fun onDraw(canvas: Canvas) {
-        // 只画胜率数字，背景/圆环/边框全部透明；黑色描边 + 填充两层
         val r = sizePx / 2f
         val pct = winPct
         val text: String
