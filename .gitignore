@@ -1,0 +1,29 @@
+# Gradle / Android
+.gradle/
+build/
+app/build/
+local.properties
+*.iml
+.idea/
+captures/
+.cxx/
+*.apk
+*.aab
+
+# 引擎二进制（76MB，不入库，见 README「第 2 步」）
+app/src/main/jniLibs/**/*.so
+stockfish/
+*.tar
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 工具产物
+tools/shots/
+
+# 系统
+.DS_Store
+Thumbs.db
+desktop.ini

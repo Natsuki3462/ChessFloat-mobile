@@ -1,0 +1,43 @@
+ChessFloat Mobile
+Copyright (C) 2026 ChessFloat contributors
+
+本程序是自由软件，依据 GNU 通用公共许可证第 3 版（GPLv3）发布，
+完整文本见 LICENSE。
+
+────────────────────────────────────────
+来源说明
+────────────────────────────────────────
+
+本项目是桌面版 ChessFloat 的 Android 移植版：
+
+    ChessFloat（桌面版，PyQt6）
+    https://github.com/Natsuki3462/chess
+    Copyright (C) 2026 ChessFloat contributors
+    License: GPLv3
+
+移植内容：棋局状态机（session.py）、引擎封装思路、棋子矢量路径
+（pieces.py → Pieces.kt）、WDL 胜率口径与指数平滑算法、自适应思考
+时间启发式（_complexity_factor）。Android 端将 UI 层以 Kotlin 重写，
+Python 内核通过 Chaquopy 复用。
+
+────────────────────────────────────────
+第三方组件
+────────────────────────────────────────
+
+Stockfish 17.1
+    https://github.com/official-stockfish/Stockfish
+    License: GPLv3
+    随附文件见 app/src/main/assets/Copying.txt 与 AUTHORS
+    注意：二进制不随仓库分发，需自行下载（见 README）
+
+python-chess 1.11.2
+    https://github.com/niklasf/python-chess
+    License: GPLv3
+    以源码形式 vendor 于 app/src/main/python/chess/
+
+Chaquopy 16.0.0
+    https://chaquo.com/chaquopy/
+    License: MIT（运行时为商业/开源双许可，本项目按开源使用）
+    Gradle 插件在构建时从 https://chaquo.com/maven 下载
+
+Qt for Python / PySide6 —— 仅桌面版使用，Android 版不含。
