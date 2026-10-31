@@ -11,6 +11,10 @@
 </p>
 
 <p align="center">
+  <b><a href="https://github.com/Natsuki3462/ChessFloat-mobile/releases/latest">↓ 下载 APK（v1.0 · arm64-v8a · Android 8.0+）</a></b>
+</p>
+
+<p align="center">
   <b>桌面版（Windows / macOS / Linux）：<a href="https://github.com/Natsuki3462/chess">Natsuki3462/chess</a></b>
 </p>
 
