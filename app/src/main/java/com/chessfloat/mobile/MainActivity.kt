@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var statusText: TextView
     private lateinit var grantButton: Button
     private lateinit var toggleButton: Button
@@ -94,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
+
         OverlayState.running = OverlayService.instance != null
         val canOverlay = Settings.canDrawOverlays(this)
         statusText.text = if (canOverlay) {

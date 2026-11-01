@@ -32,6 +32,7 @@ data class GameState(
 
 @SuppressLint("ViewConstructor")
 class BoardView(context: Context) : View(context) {
+
     var state: GameState = GameState()
         set(value) { field = value; invalidate() }
 

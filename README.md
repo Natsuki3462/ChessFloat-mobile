@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <b><a href="https://github.com/Natsuki3462/ChessFloat-mobile/releases/latest">↓ 下载 APK（v1.0 · arm64-v8a · Android 8.0+）</a></b>
+  <b><a href="https://github.com/Natsuki3462/ChessFloat-mobile/releases/latest">↓ 下载 APK（v1.01 · arm64-v8a · Android 8.0+）</a></b>
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@
 | 自动采纳 | 引擎出建议后 320ms 自动走子，带版本守卫，不会抢你手动操作 |
 | 自适应思考时间 | 残局/被将军/选择多时自动加时，无脑局面减时 |
 | 可编辑预设 | 省电 / 均衡 / 深度 / 极限 四档，思考时间、线程、Hash 都能在设置里改，存在 SharedPreferences |
-| 升变选择 | 后 / 车 / 象 / 马 四选一 |
+| 升变选择 | 后 / 车 / 象 / 马 四选一，必须选完才落子 |
 | 长按退出 | 长按气泡 600ms 退出，棋局不保留 |
 
 ## 界面

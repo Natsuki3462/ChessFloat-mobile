@@ -11,6 +11,7 @@ import org.json.JSONObject
 import java.util.concurrent.Executors
 
 object ChessCore {
+
     const val EMA_ALPHA = 0.35f
     private const val AUTO_ACCEPT_DELAY_MS = 320L
 
@@ -42,6 +43,9 @@ object ChessCore {
 
     private var selected: Int? = null
     private var legalTargets: Set<Int> = emptySet()
+
+    val currentSelection: Int? get() = selected
+    val currentTargets: Set<Int> get() = legalTargets
     private var winEma: Float? = null
     private var pendingAnalysis: Runnable? = null
     private var myWhite = true

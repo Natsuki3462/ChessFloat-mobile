@@ -12,8 +12,8 @@ android {
         applicationId = "com.chessfloat.mobile"
         minSdk = 26
         targetSdk = 35
-        versionCode = 7
-        versionName = "1.0"
+        versionCode = 9
+        versionName = "1.01"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
@@ -37,6 +37,7 @@ android {
 
     packaging {
         jniLibs {
+
             keepDebugSymbols += "**/libstockfish.so"
         }
     }
@@ -45,6 +46,8 @@ android {
 chaquopy {
     defaultConfig {
         version = "3.12"
+        buildPython("C:/Users/Administrator/.workbuddy-ai/binaries/python/versions/3.13.12/python.exe")
+
     }
 }
 

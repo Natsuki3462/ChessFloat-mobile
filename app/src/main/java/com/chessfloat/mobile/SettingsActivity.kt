@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class SettingsActivity : AppCompatActivity() {
+
     private var cfg = Config()
     private var presets: List<Preset> = Presets.defaults
     private var selected = "balanced"

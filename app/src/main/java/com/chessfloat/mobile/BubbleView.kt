@@ -12,6 +12,7 @@ import android.view.ViewConfiguration
 
 @SuppressLint("ViewConstructor")
 class BubbleView(context: Context) : View(context) {
+
     var winPct: Int? = null
         set(value) { field = value; invalidate() }
 
@@ -56,6 +57,7 @@ class BubbleView(context: Context) : View(context) {
     }
 
     override fun onDraw(canvas: Canvas) {
+
         val r = sizePx / 2f
         val pct = winPct
         val text: String

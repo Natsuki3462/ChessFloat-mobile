@@ -26,6 +26,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
 
 class OverlayService : Service() {
+
     companion object {
         private const val CHANNEL_ID = "chessfloat_overlay"
         private const val NOTIF_ID = 41
@@ -51,6 +52,7 @@ class OverlayService : Service() {
     private var panelParams: WindowManager.LayoutParams? = null
 
     private var picker: LinearLayout? = null
+    private var pendingPromotion: Pair<Int, Int>? = null
 
     private val density by lazy { resources.displayMetrics.density }
     private fun dp(v: Int) = (v * density).toInt()
@@ -81,12 +83,8 @@ class OverlayService : Service() {
             refreshStatus()
         }
         ChessCore.onPromotionNeeded = { from, to ->
-            showPicker(listOf(
-                "后" to { ChessCore.playMove(from, to, 5) },
-                "车" to { ChessCore.playMove(from, to, 4) },
-                "象" to { ChessCore.playMove(from, to, 3) },
-                "马" to { ChessCore.playMove(from, to, 2) }
-            ))
+            pendingPromotion = Pair(from, to)
+            showPromotionPicker(from, to)
         }
         ChessCore.onError = { msg -> android.util.Log.e("ChessFloat", msg); refreshStatus() }
 
@@ -97,6 +95,7 @@ class OverlayService : Service() {
     }
 
     private fun showSidePicker(cancellable: Boolean = true) {
+        pendingPromotion = null
         showPicker(
             listOf(
                 "执白" to { ChessCore.newGame(true) },
@@ -262,8 +261,13 @@ class OverlayService : Service() {
         val bv = BoardView(this).apply {
             state = ChessCore.state
             suggestion = ChessCore.suggestion
+            selected = ChessCore.currentSelection
+            legalTargets = ChessCore.currentTargets
             showCoords = cfg.showCoords
-            onSquareTap = { sq -> ChessCore.tapSquare(sq) }
+            onSquareTap = { sq ->
+
+                if (picker == null) ChessCore.tapSquare(sq)
+            }
         }
         container.addView(bv, LinearLayout.LayoutParams(side - dp(12), side - dp(12)))
 
@@ -294,14 +298,18 @@ class OverlayService : Service() {
             background = rounded(0x334ADE80)
             layoutParams = LinearLayout.LayoutParams(dp(96), dp(28))
                 .apply { marginEnd = dp(4) }
-            setOnClickListener { ChessCore.acceptSuggestion() }
+            setOnClickListener {
+                pendingPromotion = null
+                hidePicker()
+                ChessCore.acceptSuggestion()
+            }
         }
         acceptBtn = accept
 
         footer.addView(View(this), LinearLayout.LayoutParams(0, 1, 1f))
         footer.addView(accept)
-        footer.addView(toolBtn("↩") { ChessCore.undo() })
-        footer.addView(toolBtn("↪") { ChessCore.redo() })
+        footer.addView(toolBtn("↩") { pendingPromotion = null; hidePicker(); ChessCore.undo() })
+        footer.addView(toolBtn("↪") { pendingPromotion = null; hidePicker(); ChessCore.redo() })
         footer.addView(toolBtn("⟳") { showSidePicker() })
         container.addView(footer, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, dp(32)
@@ -326,6 +334,8 @@ class OverlayService : Service() {
 
         wm.removeView(bubble)
         wm.addView(bubble, bubbleParams)
+
+        restorePromotion()
     }
 
     private fun toggleAuto() {
@@ -417,9 +427,11 @@ class OverlayService : Service() {
             card.addView(TextView(this).apply {
                 text = label
                 setTextColor(Theme.TEXT)
-                textSize = 16f
+                textSize = 17f
                 gravity = Gravity.CENTER
-                setPadding(dp(14), dp(10), dp(14), dp(10))
+                minWidth = dp(60)
+                minHeight = dp(60)
+                setPadding(dp(14), dp(16), dp(14), dp(16))
                 setOnClickListener {
                     hidePicker()
                     action()
@@ -447,6 +459,11 @@ class OverlayService : Service() {
 
         picker = card
         wm.addView(card, params)
+
+        if (::bubble.isInitialized && bubble.parent != null) {
+            wm.removeView(bubble)
+            wm.addView(bubble, bubbleParams)
+        }
     }
 
     private fun hidePicker() {
@@ -457,6 +474,30 @@ class OverlayService : Service() {
             }
         }
         picker = null
+    }
+
+    private fun showPromotionPicker(from: Int, to: Int) {
+        showPicker(listOf(
+            "后" to { pickPromotion(from, to, 5) },
+            "车" to { pickPromotion(from, to, 4) },
+            "象" to { pickPromotion(from, to, 3) },
+            "马" to { pickPromotion(from, to, 2) }
+        ), cancellable = false)
+    }
+
+    private fun pickPromotion(from: Int, to: Int, piece: Int) {
+        pendingPromotion = null
+        ChessCore.playMove(from, to, piece)
+    }
+
+    private fun restorePromotion() {
+        val pending = pendingPromotion ?: return
+        val (from, to) = pending
+        if (ChessCore.currentSelection != from || !ChessCore.currentTargets.contains(to)) {
+            pendingPromotion = null
+            return
+        }
+        showPromotionPicker(from, to)
     }
 
     private fun layoutPanel() {

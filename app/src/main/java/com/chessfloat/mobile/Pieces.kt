@@ -8,6 +8,7 @@ import android.graphics.RectF
 import android.graphics.Typeface
 
 object Pieces {
+
     const val PAWN = 1
     const val KNIGHT = 2
     const val BISHOP = 3
